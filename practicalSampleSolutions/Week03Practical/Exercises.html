@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script language="javascript" src="Exercises.js" type="text/javascript"></script>
+<title>14COC155 Week 03 - Cemara access and local storage API</title>
+<meta type="viewport" content="width=device-width">
+<style>
+	body {
+		width: 98vw;
+	}
+	#article {
+		position: absolute;
+	}
+	#loaded_annotation {
+		font-size: 2em;
+	}
+	input[type="button"] {
+    	box-sizing: border-box;
+    	margin-bottom: 0;
+		font-size: 14px;
+		font-weight: normal;
+		line-height: 1.428571429;
+		text-align: center;
+		white-space: nowrap;
+		vertical-align: middle;
+		cursor: pointer;
+		border: 1px solid transparent;
+		box-shadow: inset 0 1px 0 rgba(255,255,255,0.15),0 1px 1px rgba(0,0,0,0.075);
+		text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+		background-image: linear-gradient(to bottom,#428bca 0,#3071a9 100%);
+		background-repeat: repeat-x;
+		border-color: #285e8e;
+		text-decoration: none;
+		background-color: #eee;
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+		color : white;
+	}
+</style>
+
+</head>
+
+<body>
+<div id="playground">
+
+<input type="button" value="Get live video" onclick="getVideo();" >
+<input type="button" value="take snapshot" onclick="takeSnapshot();" ><br>
+
+<video autoplay id="webcam_video"></video>
+<br>
+Snapshot:
+<br>
+
+<canvas id="canvas_snapshot"></canvas>
+<br>
+Annotation:<input type="text" id="img_annotation">
+<br><br>
+<input type="button" value="save snapshot" onclick="saveSnapshot();" >
+<input type="button" value="load snapshot" onclick="loadSnapshot();" ><br><br>
+<img src="" id="loaded_snapshot" alt="retrieved image">
+<p id="loaded_annotation"></p>
+</div>
+
+<hr>
+
+<div id="article">
+<h1>COC155 week 03 practical session - Camera access and local storage</h1>
+<p>In this session we will play with the getUserMedia API to capture video stream and still image from the built-in camera and save retrieve data locally with the
+simple local storage API. 
+As getUserMedia and local storage APIs work on both desktop and mobile browsers, you can complete the exercises on desktop and be assured that it will also work on mobile 
+devices. But in the future remember to check compatibility of any API you intend to use before proceeding with further implementation. </p>
+<p>You can make changes in the "playground" div at the beginning of this page, and go through the following exercises by completing the JavaScript functions to:</p>
+<ol>
+<li>get live video stream from built-in camera;</li>
+<li>display the live video stream on the webpage;</li>
+<li>get a snapshot when required;</li>
+<li>save the image in local storage with some annotation and get them out after reloading the page;</li>
+</ol>
+
+<h2>Step 1: getting live video stream from your built-in camera</h2>
+<p>
+getUserMedia API provides the live video stream for you. You just need to call it and tell it what you want is video.
+To make sure you've done it correctly, display some feedback in the callback function when the video stream is got back successfully
+as well as when there is an error.
+</p>
+<p>
+You can call getUserMedia API in the following way:
+</p>
+<code>
+ navigator.getUserMedia(constraint, successCallback, errorCallback);<br>
+</code>
+
+<p>You can refer to the lecture slides for the format of constraint argument and the callback functions.</p>
+<p><i>Doesn't work? did you give the correct constraint to the API function? Have you defined successCallback function? Have you
+dealt with the various vendor prefixes?</i></p>
+
+
+<h2>Step 2: displaying the live video</h2>
+<p>
+We got the live video, but if we can't use it in some way, e.g. play it, it would be useless. Let's play the video directly on the page.
+To do so you need a HTML5 video element in autoplay mode.
+</p>
+<code>
+	&lt;video autoplay>&lt;/video>
+</code>
+<p>
+The video element is already added for you in the "playground" div. But you need to link the video element with the live video stream, similar to a img element
+the video displayed in a video element is decided by its 'src' attribute. In the success callback function you defined, associate the live video stream
+with the src attribute of the video element.
+</p>
+<p><i>Doesn't work? The src attribute expects a URL not a stream. You can create an ObjectURL from the
+       stream to represent it. There's a useful interface for doing just that at window.URL.createObjectURL</i></p>
+
+
+<h2>Step 3: getting a snapshot</h2>
+<p>
+The ultimate goal of your user may be taking a photo, so let's enable them to grab a snapshot from the video when the "take snapshot" button
+is clicked, just like what the digital camera software are doing.
+</p>
+<p>
+This can be a bit tricky if you are not farmiliar with the HTML canvas element, but basically all you need to do is to get hold of the 2D context of the 
+canvas element, and draw an image from the current video image using one of the canvas context's membership functions called drawImage(src,offset-x,offset-y):
+</p>
+<code>
+	var mycontext = mycanvas.getContext("2d");<br>
+	mycontext.drawImage(myvideo,0,0);
+</code>
+<p>Note that mycanvas and myvideo are just dummy names, you need to get hold of the appropriate element first by yourself. Now
+do your own snapshot function. The canvas element is already added in the playground div:</p>
+<code>
+	&lt;canvas>&lt;/canvas>
+</code>
+
+
+<h2>Step 4: saving the snapshot and some annotation in local storage</h2>
+<p>
+Now let's persist the image as well as some annotation from the user in local storage so that we can revisit them later on.
+</p>
+<p>
+The local storage API allows you to push and retreive simple key value pairs:
+</p>
+<code>
+		 localStorage.setItem(key,value); <br>
+		 localStorage.getItem(key);<br>
+</code>
+<p>Now the question is, we know how to persist strings with those functions, but what about image. Well, you probably need to convert the image into
+a string before putting it into the local storage. It turns out that the canvas element has handy function called toDataURL that will convert its current drawing
+into a base64 string representation.</p>
+<p>So now convert the image on the canvas to a base64 string representation using: </p>
+<code>
+		 mycanvas.toDataURL(image_type);<br>
+</code>
+<p>Note that mycanvas and image_type are dummy names you need to get hold of the canvas element yourself and also shoose the a image type for your conversion.</p>
+
+<p>After that, simply save the image into local storage with a key of your choice, and with the string converted from the canvas drawing as the value. Then use
+the Chrome development tool --> resource tab to check whether you have it in the local storage. You may want to take what the user has
+entered in the annotation input field and save that in the local storage, too.</p>
+
+
+<h2>Step 5: retrieve the image and annotation</h2>
+<p>Now the final step is to retrieve them. You can set the base64 string representation as the src of a img element directly, and it shouldn't be too difficult for you
+to set the annotation string retrieved as the content of a paragraph.</p>
+
+<h2>Summary</h2>
+<p>Hopefully if you have gone through all the exercises you should now have a good idea of how camera access works and what you can do with the video you get, as well as
+how the basic local storage APIs work.</p>
+
+</div>
+
+
+</body>
+</html>
