@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Week04</string>
+    <string name="hello_world">Welcome to weather dummy app</string>
+    <string name="editbox_hint">Enter a location</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_button_query">Refresh</string>
+
+</resources>
