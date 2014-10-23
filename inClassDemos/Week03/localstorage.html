@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>test shaker page</title>
+	 
+	<meta name="viewport" content="width=device-width"/>
+	
+	<style type="text/css">
+	
+		body {
+			
+			border: 3px solid black;
+			width: 96%;
+			font-size: 1.5em;
+		}
+		p {
+			font-size : 3em;
+		}
+	</style>
+	<script type="text/javascript">
+		function saveValue(){
+			var name = document.getElementById("name").value;
+			var score = document.getElementById("score").value;
+			localStorage.setItem(name,score);
+		}
+		
+		function getValue(){
+			var html = "";
+			for(var i=0;i<localStorage.length;i++){
+				var key = localStorage.key(i);
+				var value = localStorage.getItem(key);
+				html+= key + " : " + value + "<br>";
+			}
+			document.getElementById("retrieved").innerHTML = html;
+		}
+	</script>
+	
+</head>
+
+<body onload="">
+
+<div>
+Name:<input type="text" id="name"><br>
+Score:<input type="text" id="score"><br>
+<input type="button" value="save" onclick="saveValue();">
+<input type="button" value="retrieve" onclick="getValue();">
+<input type="button" value="clear storage" onclick="localStorage.clear();">
+<p id="retrieved"></p>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<html>
+<head>
+	<title>test web server index page</title>
+	<!-- 
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	-->
+	<style type="text/css">
+	
+		body {
+			
+			border: 3mv solid black;
+			width: 96%;
+
+		}
+		p {
+			font-size : 2em;
+		}
+		
+		@media screen and (max-width: 600px) {
+		body{
+			background-color: grey;
+			}
+		}
+		
+		
+		video {
+			width: 320px;
+		}
+		
+		img {
+			width: 320px;
+		}
+		
+	</style>
+		<script type="text/javascript">
+		navigator.getUserMedia  = navigator.getUserMedia ||
+		navigator.webkitGetUserMedia ||
+		navigator.mozGetUserMedia ||
+		navigator.msGetUserMedia;
+
+		function snapshot(){
+			  var video = document.querySelector('video');
+			  var canvas = document.querySelector('canvas');
+			  var ctx = canvas.getContext("2d");
+			  canvas.width = video.videoWidth;
+			  canvas.height = video.videoHeight;
+			  
+			  ctx.drawImage(video,0,0);
+			  
+			  //document.querySelector("img").src = canvas.toDataURL("image/webp");
+		}
+
+		function saveSnapshot(){
+			var mycanvas = document.getElementById("canvas_snapshot");
+			var myimage = mycanvas.toDataURL("image/png");
+			localStorage.setItem("img" , myimage);
+		}
+
+		function loadSnapshot(){
+			var myimage = localStorage.getItem('img');
+			document.getElementById("loaded_snapshot").src = myimage;
+		}
+
+		function init(){
+			var constraint = {video : true};
+			
+			navigator.getUserMedia(constraint, successCallback, errorCallback);
+		}
+
+		function successCallback(stream){
+			var video = document.getElementById("webcam_video");
+			video.src = window.URL.createObjectURL(stream);
+		}
+
+		function errorCallback(error){
+			alert("something went wrong for getting user media");
+		}
+	</script>
+	
+</head>
+
+<body onload="">
+
+<div id="mainpage">
+
+<input type="button" value="enable video" onclick="init();" >
+<input type="button" value="take photo" onclick="snapshot();" ><br>
+
+<video autoplay onclick="snapshot();" id="webcam_video"></video>
+Snapshot:<br>
+<canvas id="canvas_snapshot"></canvas>
+Annotation:<input type="text" id="img_annotation">
+<br>
+<input type="button" value="save snapshot" onclick="saveSnapshot();" >
+<input type="button" value="load snapshot" onclick="loadSnapshot();" ><br>
+<img src="" id="loaded_snapshot">
+<p id="loaded_annotation"></p>
+</div>
+
+</body>
+
+</html>

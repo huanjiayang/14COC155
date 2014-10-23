@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>test shaker page</title>
+	 
+	<meta name="viewport" content="width=device-width"/>
+	
+	<style type="text/css">
+	
+		body {
+			
+			border: 3px solid black;
+			width: 96%;
+			font-size: 1.5em;
+		}
+		p {
+			font-size : 3em;
+		}
+		#shake_text {
+		display: None;
+		}
+	</style>
+	<script type="text/javascript">
+	window.addEventListener('devicemotion',motionHandler, false);
+	
+	function motionHandler(motion){
+		var x,y,z;
+		x=motion.accelerationIncludingGravity.x;
+		y=motion.accelerationIncludingGravity.y;
+		z=motion.accelerationIncludingGravity.z;
+		
+		if ((x*x+y*y+z*z)>300)
+			showShakeText();
+	}
+	
+	function showShakeText(){
+		document.getElementById("shake_text").style.display = "block";
+	}
+	</script>
+	
+</head>
+
+<body onload="">
+
+<div id="shake_text">
+<p>Stop shaking me!!! -_-:</p>
+</div>
+
+</body>
+
+</html>

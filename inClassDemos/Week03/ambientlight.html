@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>test shaker page</title>
+	 
+	<meta name="viewport" content="width=device-width"/>
+	
+	<style type="text/css">
+	
+		body {
+			
+			border: 3px solid black;
+			width: 96%;
+			font-size: 1.5em;
+		}
+		p {
+			font-size : 3em;
+		}
+	</style>
+	<script type="text/javascript">
+	window.addEventListener('devicelight', function(event) {
+		   document.getElementById("text_para").innerHTML ='The current value of light is ' + event.value + ' lux';
+		},true);
+	</script>
+	
+</head>
+
+<body onload="">
+
+<div id="shake_text">
+<p id="text_para">Get your hands away from me!!</p>
+</div>
+
+</body>
+
+</html>
