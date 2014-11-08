@@ -78,10 +78,15 @@ public class Week04Activity extends ActionBarActivity {
     // by taking a View type argument
     public void refreshWeather(View view){
 
+        // Get the city name entered by the user
+        String city_name = ((EditText)findViewById(R.id.edit_message)).getText().toString();
+
         // Instead of making the network calls,
         // we just start the getWeatherTask here
+        // Note that we pass the city name to the getWeatherTask
+        // when we start it
         getWeatherTask myGWT = new getWeatherTask();
-        myGWT.execute();
+        myGWT.execute(city_name);
 
     }
 
