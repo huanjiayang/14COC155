@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.huanjiayang.Week08SQLiteSimpleDemo" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.huanjiayang.Week08SQLiteSimpleDemo.Week04Activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.huanjiayang.Week08SQLiteSimpleDemo.Week05WeatherDetailActivity"
+            android:label="@string/title_activity_w05_detail_weather"
+            android:parentActivityName="com.example.huanjiayang.Week08SQLiteSimpleDemo.Week04Activity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.huanjiayang.week04.Week04Activity" />
+        </activity>
+        <activity
+            android:name="com.example.huanjiayang.Week08SQLiteSimpleDemo.Week07SettingsActivity"
+            android:label="@string/title_activity_week07_settings"
+            android:parentActivityName="com.example.huanjiayang.Week08SQLiteSimpleDemo.Week04Activity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.huanjiayang.week07MenuSharedPreference.Week04Activity" />
+        </activity>
+    </application>
+
+</manifest>
