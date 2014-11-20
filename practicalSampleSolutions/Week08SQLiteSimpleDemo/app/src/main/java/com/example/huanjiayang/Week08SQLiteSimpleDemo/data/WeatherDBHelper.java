@@ -14,12 +14,17 @@ public class WeatherDBHelper extends SQLiteOpenHelper{
     // db name as public as we use it in test later
     public static final String DB_NAME = "weather.db";
 
+    public SQLiteDatabase myDB;
+
     public WeatherDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, null, version);
+        myDB = getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        myDB = db;
 
         String query = "CREATE TABLE IF NOT EXISTS WEATHER_TABLE ( _ID INTEGER PRIMARY KEY AUTOINCREMENT, DAY_WEATHER TEXT NOT NULL );";
 
